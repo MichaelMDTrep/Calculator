@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Dimensions, PanResponder, StyleSheet, Text, View } from "react-native";
+import { Dimensions, PanResponder, StyleSheet, Text, View, navbar } from "react-native";
 import { CalcButton, CalcDisplay } from "../components";
-
 require("../lib/swisscalc.lib.format.js");
 require("../lib/swisscalc.lib.operator.js");
 require("../lib/swisscalc.lib.operatorCache.js");
@@ -10,13 +9,27 @@ require("../lib/swisscalc.display.memoryDisplay.js");
 require("../lib/swisscalc.display.numericDisplay.js");
 require("../lib/swisscalc.calc.calculator.js");
 
+
 export default class CalculatorScreen extends Component {
   constructor(props) {
     super(props);
+
+
+
+
+
     this.state = {
       display: "0",
+
+
       orientation: "portrait",
     };
+    // state = {
+    //   collapseID: ''
+    // };
+
+
+
     // Initialize calculator
     this.oc = global.swisscalc.lib.operatorCache;
     this.calc = new global.swisscalc.calc.calculator();
@@ -41,7 +54,14 @@ export default class CalculatorScreen extends Component {
       },
     });
   }
+  state = {
+    collapseID: ''
+  };
 
+  toggleCollapse = () => {
+    this.calc.equalsPressed();
+    this.setState({ display: this.calc.getMainDisplay() });
+  };
   //   When a digit is pressed
   onDigitPress = (digit) => {
     this.calc.addDigit(digit);
@@ -92,7 +112,51 @@ export default class CalculatorScreen extends Component {
             marginBottom: 10,
           }}
         />
-        <View style={styles.buttonContainer}>
+        <CalcButton
+          onPress={() => {
+            this.toggleCollapse();
+          }}
+          style={{
+
+            width: 35,
+            height: 5,
+            backgroundcolor: "#000000",
+            margin: 6,
+
+          }
+          }
+
+        />
+        <CalcButton
+          onPress={() => {
+            this.toggleCollapse();
+          }}
+          style={{
+
+            width: 35,
+            height: 5,
+            backgroundcolor: "#000000",
+            margin: 6,
+
+          }
+          }
+
+        />
+        <CalcButton
+          onPress={() => {
+            this.toggleCollapse();
+          }}
+          style={{
+
+            width: 35,
+            height: 5,
+            backgroundcolor: "#000000",
+            margin: 6,
+          }
+          }
+
+        />
+        < View style={styles.buttonContainer} >
           <View style={styles.buttonRow}>
             <CalcButton
               onPress={() => {
@@ -241,6 +305,7 @@ export default class CalculatorScreen extends Component {
                   marginBottom: -180
                 }}
               />
+
               <CalcButton
                 onPress={() => {
                   this.onDigitPress("2");
@@ -314,11 +379,28 @@ export default class CalculatorScreen extends Component {
                   }}
 
                 />
+                <navbar
+                  onPress={() => {
+                    this.toggleCollapse("")
+
+                  }}
+                  style={{
+                    // display: block,
+                    margin: 4,
+                    height: 9,
+                    width: 60,
+                    background: "#d3531a",
+                    borderradius: 9
+                  }}
+                >
+                </navbar>
               </view>
             </View>
           </View>
-        </View>
-      </View>
+        </View >
+
+
+      </View >
     );
   }
 
@@ -338,7 +420,10 @@ export default class CalculatorScreen extends Component {
 
     return <View style={{ flex: 1 }}>{view}</View>;
   }
+
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -362,3 +447,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+
